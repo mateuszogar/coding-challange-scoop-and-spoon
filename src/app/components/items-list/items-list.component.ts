@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscriber, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { RecruitingContentsService } from 'src/app/services/recruting-contents/recruiting-contents.service';
 import { CompanyResponseModel } from 'src/app/services/recruting-contents/recruiting-contents.types';
 
@@ -17,19 +17,11 @@ export class ItemsListComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
   private contents: CompanyResponseModel[] = [];
-  terms$ = new Subject<string>();
+  searcherInput$ = new Subject<string>();
   searchInputValue = '';
 
   ngOnInit(): void {
     this.getAllContent();
-
-    this.terms$.pipe(
-      debounceTime(400), // discard emitted values that take less than the specified time between output
-      distinctUntilChanged() // only emit when value has changed
-    ).subscribe(term => {
-      console.log(term);
-      this.allItems = this.allItems.filter(item => item.name.includes(term));
-    });
   }
 
   ngOnDestroy(): void {
@@ -47,6 +39,7 @@ export class ItemsListComponent implements OnInit, OnDestroy {
   getAllContent(): void {
     const contentItemsSubscription =  this.recruitingContentService.getAllContent().subscribe(content => {
       this.allItems = content;
+      this.handleSearch();
     },
     err => {
       alert('Problem with retrieving data from server');
@@ -67,7 +60,21 @@ export class ItemsListComponent implements OnInit, OnDestroy {
     console.log(item);
   }
 
-  handleSearcher(event: any): void {
-    console.log(event);
+  onSearchChange(inputValue: string): void {
+    this.searcherInput$.next(inputValue);
+  }
+
+  handleSearch(): void {
+    const fullList = [...this.allItems];
+
+    const searchValueSubscription = this.searcherInput$.pipe(
+      debounceTime(400),
+    ).subscribe(term => {
+      this.allItems = fullList.filter(item => {
+        return item.company.toLowerCase().match(term.toLocaleLowerCase())
+      });
+    });
+
+    this.subscription.add(searchValueSubscription);
   }
 }

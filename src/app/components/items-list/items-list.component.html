@@ -1,7 +1,7 @@
 
 <div class="search">
   <label for="search">Search</label>
-  <input id="search" name="search" [(ngModel)]="searchInputValue" />
+  <input [ngModel]='searchInputValue' (ngModelChange)='onSearchChange($event)'/>
 </div>
 
 <div class="item-list-wrapper">
