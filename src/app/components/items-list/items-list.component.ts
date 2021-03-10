@@ -42,14 +42,7 @@ export class ItemsListComponent implements OnInit, OnDestroy {
     const contentItemsSubscription =  this.recruitingContentService.getAllContent().subscribe(content => {
       this.allItems = content;
       this.handleSearch();
-    },
-    err => {
-      if(err.status == 500 ) {
-        console.error(err);
-        console.log(err.statusText);
-      }
-      alert(err.message);
-    });
+     });
 
     this.subscription.add(contentItemsSubscription);
   }
