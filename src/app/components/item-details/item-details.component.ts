@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common'
 import { Subscription } from 'rxjs';
+
 import { RecruitingContentsService } from 'src/app/services/recruting-contents/recruiting-contents.service';
 import { CompanyResponseModel } from 'src/app/services/recruting-contents/recruiting-contents.types';
 
-import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-item-details',
@@ -19,13 +20,10 @@ export class ItemDetailsComponent implements OnInit {
   constructor(
     private recruitingContentService: RecruitingContentsService,
     private route: ActivatedRoute,
-    private router: Router,
-    private location: Location
+    public location: Location
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('company');
-
     this.route.params.subscribe(param => {
       this.recruitingContentService.getSingleContent(param.companyId)
         .subscribe(response => this.companyDetails = response)
