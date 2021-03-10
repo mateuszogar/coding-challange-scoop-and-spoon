@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+export const routes: Routes = [
+  // {
+  //   path: '',
+  //   children: authRoutes
+  // },
+  // {
+  //   path: 'company/:companyName',
+  //   component: DeepLinkView
+  // }
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

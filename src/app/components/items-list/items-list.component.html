@@ -1,0 +1,18 @@
+
+<div class="search">
+  <label for="search">Search</label>
+  <input id="search" name="search" [(ngModel)]="searchInputValue" />
+</div>
+
+<div class="item-list-wrapper">
+  <div (click)="openSeparatePage(item)" class="single-item" *ngFor="let item of allItems;" [attr.data-id] = "item.id">
+    <p class="company-name">{{item.company}}</p>
+    <p class="company-owner">{{item.name}}</p>
+    <img
+        class="hide cancel-button"
+        (click)="removeFromList(item.id);$event.stopPropagation()"
+        src="./../../../assets/cancel.svg"
+        alt="Cancel button to get rid of selected item from the list"
+    />
+  </div>
+</div>
