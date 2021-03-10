@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { RecruitingContentsService } from 'src/app/services/recruting-contents/recruiting-contents.service';
@@ -12,7 +13,8 @@ import { CompanyResponseModel } from 'src/app/services/recruting-contents/recrui
 export class ItemsListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private readonly recruitingContentService: RecruitingContentsService
+    private readonly recruitingContentService: RecruitingContentsService,
+    public router: Router
   ) {}
 
   private subscription = new Subscription();
@@ -28,11 +30,11 @@ export class ItemsListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  get allItems(): CompanyResponseModel[]{
+  get allItems(): CompanyResponseModel[] {
     return this.contents;
   }
 
-  set allItems(items: CompanyResponseModel[]){
+  set allItems(items: CompanyResponseModel[]) {
     this.contents = items;
   }
 
@@ -42,7 +44,11 @@ export class ItemsListComponent implements OnInit, OnDestroy {
       this.handleSearch();
     },
     err => {
-      alert('Problem with retrieving data from server');
+      if(err.status == 500 ) {
+        console.error(err);
+        console.log(err.statusText);
+      }
+      alert(err.message);
     });
 
     this.subscription.add(contentItemsSubscription);
@@ -56,8 +62,8 @@ export class ItemsListComponent implements OnInit, OnDestroy {
     this.allItems = this.allItems.filter(item => item.id != id);
   }
 
-  openSeparatePage(item: CompanyResponseModel): void {
-    console.log(item);
+  openSeparatePage(companyId: string): void {
+    this.router.navigate(['company', companyId]);
   }
 
   onSearchChange(inputValue: string): void {

@@ -1,0 +1,67 @@
+:host {
+  max-width: 1000px;
+  margin: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  letter-spacing: 1px;
+  font-weight: 300;
+  color: #333;
+  line-height: 2em;
+
+  .go-back-button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    padding: 8px 16px;
+    justify-content: space-between;
+    cursor: pointer;
+    width: fit-content;
+    margin-bottom: 32px;
+    border-radius: 8px;
+
+    img {
+      margin-right: 12px;
+    }
+
+    &:hover {
+      background-color: #f0f0f0f0;
+    }
+  }
+
+  .main-section {
+    .hero-section {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .company-image {
+        width: 100%;
+        height: auto;
+      }
+
+      .details {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 800px) {
+      .hero-section {
+        flex-direction: row;
+
+        .company-image {
+          width: 50%;
+        }
+
+        .details {
+          width: 45%;
+        }
+      }
+    }
+
+    .description {
+      margin: 36px 0;
+    }
+  }
+}

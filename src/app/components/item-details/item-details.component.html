@@ -1,1 +1,27 @@
-<p>item-details works!</p>
+<div *ngIf="companyDetails">
+  <div class="go-back-button" (click)="goBack()">
+    Go back
+    <img src="./../../../assets/back.png" width="24px" height="24px" />
+  </div>
+  <header>
+    <h1>
+      {{companyDetails?.company}}
+    </h1>
+  </header>
+  <main class="main-section">
+    <div class="hero-section">
+      <img
+        class="company-image"
+        src={{companyDetails.imageUrl}}
+      />
+      <section class="details">
+        <h3>Owner: {{companyDetails.name}}</h3>
+        <p class=""><strong>Latitude: </strong>{{companyDetails.latitude}}</p>
+        <p class=""><strong>Longitude: </strong>{{companyDetails.longitude}}</p>
+        <p class=""><strong>Tags:</strong> {{companyDetails.tags.join(' | ')}}</p>
+      </section>
+    </div>
+    <p class="description">{{companyDetails.description}}</p>
+  </main>
+</div>
+
