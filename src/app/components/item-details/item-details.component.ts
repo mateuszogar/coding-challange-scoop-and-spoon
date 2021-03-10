@@ -14,7 +14,7 @@ import { CompanyResponseModel } from 'src/app/services/recruting-contents/recrui
 })
 export class ItemDetailsComponent implements OnInit {
 
-  companyDetails: CompanyResponseModel = {id: '', name: '', company: '', description: '', latitude: 0, longitude: 0, imageUrl: '', tags: []};
+  companyDetails?: CompanyResponseModel;
   subscription: Subscription = new Subscription();
 
   constructor(

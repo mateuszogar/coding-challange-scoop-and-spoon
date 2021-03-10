@@ -50,7 +50,7 @@ describe('ItemDetailsComponent', () => {
   });
 
   it("should have as header 'KIGGLE'", () => {
-    expect(component.companyDetails.company).toEqual('KIGGLE');
+    expect(component.companyDetails?.company).toEqual('KIGGLE');
 
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('KIGGLE');
